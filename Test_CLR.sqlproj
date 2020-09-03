@@ -62,10 +62,14 @@
     <Compile Include="Classes\Functions.cs" />
     <Compile Include="Classes\Procedures.cs" />
     <Compile Include="Classes\SqlStoredProcedure1.cs" />
+    <Compile Include="Classes\Total.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SQLDebug.sql" />
   </ItemGroup>
 </Project>

@@ -1,2 +1,2 @@
   
- EXEC [dbo].[ProcessSum]
+ EXEC [dbo].[ReturnSum]
