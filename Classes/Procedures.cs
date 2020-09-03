@@ -241,13 +241,28 @@ namespace Test_CLR
 					}
 				}
 
+				int _previousId = -1;
 				foreach (Total _TotalItem in _Total)
 				{
 					Total _TotalItem2 = new Total();
 					_TotalItem2.Id = _TotalItem.Id;
 					_TotalItem2.TotalRevenue = _TotalItem.TotalRevenue;
 					_TotalItem2.DatetimeStamp = _TotalItem.DatetimeStamp;
-					_Total2.Add(_TotalItem2);
+
+
+					if (_previousId != -1)
+                    {
+						Total _TotalItemPrevious = new Total();
+						_TotalItemPrevious = _Total.FindLast(x => x.Id == _previousId);
+						_TotalItem2.TotalRevenueNew = _TotalItemPrevious.TotalRevenue;
+					} else
+                    {
+						_TotalItem2.TotalRevenueNew = 0;
+					}
+
+					_previousId = _TotalItem.Id;
+
+					_Total2.Add(_TotalItem2); 
 				}
 
 			 
@@ -283,11 +298,12 @@ namespace Test_CLR
 		{
 
 			SqlPipe pipe = SqlContext.Pipe;
-			SqlMetaData[] cols = new SqlMetaData[3];
+			SqlMetaData[] cols = new SqlMetaData[4];
 			cols[0] = new SqlMetaData("id", SqlDbType.Int);
 			cols[1] = new SqlMetaData("TotalRevenue", SqlDbType.Decimal, 38, 4);
 			cols[2] = new SqlMetaData("DatetimeStamp", SqlDbType.DateTime);
-			 
+			cols[3] = new SqlMetaData("TotalRevenueNew", SqlDbType.Decimal, 38, 4);
+
 
 			SqlDataRecord row = new SqlDataRecord(cols);
 			pipe.SendResultsStart(row);
@@ -298,7 +314,7 @@ namespace Test_CLR
 				row.SetInt32(0, _totalRevenueItem.Id);
 				row.SetDecimal(1,  _totalRevenueItem.TotalRevenue);
 				row.SetDateTime(2, _totalRevenueItem.DatetimeStamp);
-
+				row.SetDecimal(3, _totalRevenueItem.TotalRevenueNew);
 				pipe.SendResultsRow(row);
 			}
 			pipe.SendResultsEnd();

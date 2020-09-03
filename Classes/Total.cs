@@ -9,5 +9,6 @@ namespace Test_CLR
         public int Id { get; set; }
         public decimal TotalRevenue { get; set; }
         public DateTime DatetimeStamp { get; set; }
+        public decimal TotalRevenueNew { get; set; }
     }
 }
